@@ -30,7 +30,9 @@ pipeline {
                 USER_EC2 = credentials('USER_EC2')
             }
             steps {
-                sh 'ansible -i ./inventory.ini --private-key="$SSH_PRIVATE_KEY" -u $USER_EC2 -m ping'
+                script {
+                    sh 'ansible-playbook -i ./inventory.ini --private-key="$SSH_PRIVATE_KEY" nginx.yml'
+                }
             }
         }
     }
