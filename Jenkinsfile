@@ -31,7 +31,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'ansible-playbook -i ./inventory.ini nginx.yml'
+                    sh 'ansible-playbook -i ./inventory.ini -u $USER_EC2 --private-key $SSH_PRIVATE_KEY ./nginx.yml'
                 }
             }
         }
