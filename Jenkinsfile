@@ -24,6 +24,17 @@ pipeline {
                 //sh 'terraform destroy --auto-approve'
             }
         }
+        stage ('Adicionando a Chave do Host ao known_hosts') {
+            steps {
+                echo 'Known_hosts Original'
+                echo '-------------------------------------------------'
+                sh 'cat /var/lib/jenkins/.ssh/known_hosts' 
+                sh 'ssh-keyscan -H 34.228.208.121 >> /var/lib/jenkins/.ssh/known_hosts'
+                echo 'Known_hosts modificado'
+                echo '-------------------------------------------------'
+                sh 'cat /var/lib/jenkins/.ssh/known_hosts'
+            }
+        }
         stage ('Acessando a Instância via Ansible') {
             environment {
                 SSH_PRIVATE_KEY = credentials('SSH_PRIVATE_KEY')
@@ -31,6 +42,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh ''
                     sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --ssh-common-args=\'-o StrictHostKeyChecking=no\' nginx.yml'
                 }
             }
