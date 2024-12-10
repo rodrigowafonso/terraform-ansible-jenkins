@@ -19,6 +19,8 @@ pipeline {
             steps {
                 sh 'terraform fmt'
                 sh 'terraform init -backend-config="bucket=$AWS_NAME_BUCKET" -backend-config="key=$AWS_TERRAFORM_TFSTATE" -backend-config="region=$AWS_REGION"'
+                sh 'terraform plan'
+                sh 'terraform apply --auto-approve'
             }
         }
     }
