@@ -31,7 +31,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --extras-vars "ansible_ssh_common_args=\'-o StrictHostKeyChecking=no\'" nginx.yml'
+                    sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --ssh-common-args=\'-o StrictHostKeyChecking=no\' nginx.yml'
                 }
             }
         }
