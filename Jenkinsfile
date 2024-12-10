@@ -21,6 +21,8 @@ pipeline {
                 sh 'terraform init -backend-config="bucket=$AWS_NAME_BUCKET" -backend-config="key=$AWS_TERRAFORM_TFSTATE" -backend-config="region=$AWS_REGION"'
                 sh 'terraform plan'
                 sh 'terraform apply --auto-approve'
+                sh 'terraform output ip_publico_srv_webserver_rwa'
+                echo "sh'terraform output ip_publico_srv_webserver_rwa'"
                 //sh 'terraform destroy --auto-approve'
             }
         }
@@ -29,11 +31,11 @@ pipeline {
                 script {
                     // def publicIp = sh(script: 'terraform output ip_publico_srv_webserver_rwa', returnStdout: true).trim()
                     // env.PUBLIC_IP = publicIp
-                    echo '-------------------------------------------------'
-                    sh 'terraform output ip_publico_srv_webserver_rwa'
-                    echo "sh'terraform output ip_publico_srv_webserver_rwa'"
-                    echo "O IP Público: ${env.PUBLIC_IP}"
-                    echo '-------------------------------------------------'
+                    // echo '-------------------------------------------------'
+                    // sh 'terraform output ip_publico_srv_webserver_rwa'
+                    // echo "sh'terraform output ip_publico_srv_webserver_rwa'"
+                    // echo "O IP Público: ${env.PUBLIC_IP}"
+                    // echo '-------------------------------------------------'
                 }
             }
         }
