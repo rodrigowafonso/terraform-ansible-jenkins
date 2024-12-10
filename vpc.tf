@@ -8,6 +8,7 @@ resource "aws_vpc" "vpc_rwa_jta" {
     } 
 }
 
+# Provisionando a Subnet do Projeto
 resource "aws_subnet" "subnet_rwa_jta" {
     vpc_id = aws_vpc.vpc_rwa_jta.id
     cidr_block = var.subnet_cidr_block
@@ -18,6 +19,7 @@ resource "aws_subnet" "subnet_rwa_jta" {
     }
 }
 
+# Provisionando o Internet Gateway do Projeto
 resource "aws_internet_gateway" "internet_gateway_rwa_jta" {
     vpc_id = aws_vpc.vpc_rwa_jta.id
 
@@ -27,6 +29,7 @@ resource "aws_internet_gateway" "internet_gateway_rwa_jta" {
     } 
 }
 
+# Provisionando a Tabela de Rota do Projeto
 resource "aws_route_table" "tabela_rota_rwa_jta" {
     vpc_id = aws_vpc.vpc_rwa_jta.id
 
@@ -42,6 +45,7 @@ resource "aws_route_table" "tabela_rota_rwa_jta" {
 
 }
 
+# Associando a Tabela de Rota e Subnet ao Internet Gateway
 resource "aws_route_table_association" "associa_rt_gw_rwa_jta" {
     subnet_id = aws_subnet.subnet_rwa_jta.id
     route_table_id = aws_route_table.tabela_rota_rwa_jta.id
