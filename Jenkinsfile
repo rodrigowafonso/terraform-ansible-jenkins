@@ -27,9 +27,11 @@ pipeline {
         stage ('Descobrindo o IP Público da Instância') {
             steps {
                 script {
-                    def publicIp = sh(script: 'terraform output ip_publico_srv_webserver_rwa', returnStdout: true).trim()
-                    env.PUBLIC_IP = publicIp
+                    // def publicIp = sh(script: 'terraform output ip_publico_srv_webserver_rwa', returnStdout: true).trim()
+                    // env.PUBLIC_IP = publicIp
                     echo '-------------------------------------------------'
+                    sh 'terraform output ip_publico_srv_webserver_rwa'
+                    echo "sh'terraform output ip_publico_srv_webserver_rwa'"
                     echo "O IP Público: ${env.PUBLIC_IP}"
                     echo '-------------------------------------------------'
                 }
