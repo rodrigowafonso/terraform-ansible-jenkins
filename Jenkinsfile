@@ -24,5 +24,13 @@ pipeline {
                 //sh 'terraform destroy --auto-approve'
             }
         }
+        stage ('Acessando a Instância via Ansible') {
+            environment {
+                SSH_PRIVATE_KEY = credentials('SSH_PRIVATE_KEY')
+            }
+            steps {
+                sh 'ansible -i ./inventory.ini --private-key=$SSH_PRIVATE_KEY -m ping'
+            }
+        }
     }
 }
