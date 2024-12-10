@@ -1,3 +1,4 @@
+// Provisionando o Grupo de Segurança do Ambiente
 resource "aws_security_group" "security_gropu_rwa_jta" {
     name = "security_gropu_rwa_jta"
     vpc_id = aws_vpc.vpc_rwa_jta.id

@@ -27,9 +27,10 @@ pipeline {
         stage ('Acessando a Instância via Ansible') {
             environment {
                 SSH_PRIVATE_KEY = credentials('SSH_PRIVATE_KEY')
+                USER_EC2 = credentials('USER_EC2')
             }
             steps {
-                sh 'ansible -i ./inventory.ini --private-key=$SSH_PRIVATE_KEY -m ping'
+                sh 'ansible -i ./inventory.ini --private-key="$SSH_PRIVATE_KEY" -u $USER_EC2 -m ping'
             }
         }
     }
