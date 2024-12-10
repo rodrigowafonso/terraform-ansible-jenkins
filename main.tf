@@ -1,6 +1,8 @@
 terraform {
 
-backend "aws" {
+backend "s3" {
+
+    # A configuração do Backend Terraform State será provisionado no S3
     
 }
 
