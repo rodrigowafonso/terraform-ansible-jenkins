@@ -15,3 +15,10 @@ variable "subnet_cidr_block" {
     type = string
     default = "10.0.1.0/24" 
 }
+
+variable "prefix" {
+    description = "Criando Role"
+    type = string
+    default = "rwa_jta"
+  
+}
