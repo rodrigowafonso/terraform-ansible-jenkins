@@ -3,8 +3,10 @@ regions:
   - us-east-1 
 filters: 
   instance-state-name: running 
-keyed_groups: 
-    key: tag.Env 
+keyed_groups:
+  - prefix: tag
+    key: tags.Env 
+    key: tags.Name
     separator: ""
 compose: 
   ansible_host: public_ip_address
