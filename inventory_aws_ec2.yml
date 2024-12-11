@@ -1,6 +1,6 @@
 plugin: amazon.aws.aws_ec2
 region:
-  - "us_east-1"
+  - 'us_east-1'
 filters:
   tag:stack: Dev
 keyed_groups:
