@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     env.known_HostsPath = '/var/lib/jenkins/.ssh/known_hosts'
-                    env.checkHost = sh(script: "grep -p '${PUBLIC_IP}' ${known_HostsPath} || echo 'IP não encontrado'", returnStatus: true)
+                    env.checkHost = sh(script: "grep -P '${PUBLIC_IP}' ${known_HostsPath} || echo 'IP não encontrado'", returnStatus: true)
                     if (${checkHost} == 0) {
                         echo "IP já existe no arquivo known_hosts"
                     } else {
