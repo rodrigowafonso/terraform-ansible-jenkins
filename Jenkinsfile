@@ -49,26 +49,22 @@ pipeline {
                     echo "O Valor da variável checkHost: ${checkHost}"
                     echo '-------------------------------------------------'
                     if (${checkHost} == 0) {
-                        echo "IP já existe no arquivo known_hosts"
-                    } else {
                         sh "ssh-keyscan -H ${PUBLIC_IP} >> ${known_HostsPath}"
                         echo '-------------------------------------------------'
                         echo "IP Público: ${PUBLIC_IP} Adicionado ao arquivo known_hosts"
                         echo '-------------------------------------------------'
+                    } else {
+                        echo "IP já existe no arquivo known_hosts"
                     }
                 }
             }
         }
         stage ('Acessando a Instância via Ansible') {
-            environment {
-                SSH_PRIVATE_KEY = credentials('SSH_PRIVATE_KEY')
-                USER_EC2 = credentials('USER_EC2')
-            }
             steps {
                 script {
                     sh 'ansible --version'
                     sh 'ansible-inventory --graph'
-                    ansiblePlaybook credentialsId: '${PRIVATE_KEY_ANSIBLE}', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
+                    //ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
                     // sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --ssh-common-args=\'-o StrictHostKeyChecking=no\' nginx.yml'
                     //sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" nginx.yml'
                 }
