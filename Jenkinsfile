@@ -21,40 +21,38 @@ pipeline {
                 sh 'terraform init -backend-config="bucket=$AWS_NAME_BUCKET" -backend-config="key=$AWS_TERRAFORM_TFSTATE" -backend-config="region=$AWS_REGION"'
                 sh 'terraform plan'
                 sh 'terraform apply --auto-approve'
-                sh 'terraform output ip_publico_srv_webserver_rwa'
-                echo "sh'terraform output ip_publico_srv_webserver_rwa'"
-                //sh 'terraform destroy --auto-approve'
+                sh 'terraform destroy --auto-approve'
             }
         }
-        stage ('Descobrindo o IP Público da Instância') {
-            steps {
-                script {
-                    // def publicIp = sh(script: 'terraform output ip_publico_srv_webserver_rwa', returnStdout: true).trim()
-                    // env.PUBLIC_IP = publicIp
-                    // echo '-------------------------------------------------'
-                    // sh 'terraform output ip_publico_srv_webserver_rwa'
-                    // echo "sh'terraform output ip_publico_srv_webserver_rwa'"
-                    // echo "O IP Público: ${env.PUBLIC_IP}"
-                    // echo '-------------------------------------------------'
-                }
-            }
-        }
-        stage ('Adicionando a Chave do Host ao known_hosts') {
-            steps {
-                script {
-                    def known_HostsPath = '/var/lib/jenkins/.ssh/known_hosts'
-                    def checkHost = sh(script: "grep -p '${env.PUBLIC_IP}' ${known_HostsPath} || echo 'IP não encontrado'", returnStatus: true)
-                    if (checkHost == 0) {
-                        echo "IP já existe no arquivo known_hosts"
-                    } else {
-                        sh "ssh-keyscan -H ${env.PUBLIC_IP} >> ${known_HostsPath}"
-                        echo '-------------------------------------------------'
-                        echo "IP Público: ${env.PUBLIC_IP} Adicionado ao arquivo known_hosts"
-                        echo '-------------------------------------------------'
-                    }
-                }
-            }
-        }
+        // stage ('Descobrindo o IP Público da Instância') {
+        //     steps {
+        //         script {
+        //             def publicIp = sh(script: 'terraform output ip_publico_srv_webserver_rwa', returnStdout: true).trim()
+        //             env.PUBLIC_IP = publicIp
+        //             echo '-------------------------------------------------'
+        //             sh 'terraform output ip_publico_srv_webserver_rwa'
+        //             echo "sh'terraform output ip_publico_srv_webserver_rwa'"
+        //             echo "O IP Público: ${env.PUBLIC_IP}"
+        //             echo '-------------------------------------------------'
+        //         }
+        //     }
+        // }
+        // stage ('Adicionando a Chave do Host ao known_hosts') {
+        //     steps {
+        //         script {
+        //             def known_HostsPath = '/var/lib/jenkins/.ssh/known_hosts'
+        //             def checkHost = sh(script: "grep -p '${env.PUBLIC_IP}' ${known_HostsPath} || echo 'IP não encontrado'", returnStatus: true)
+        //             if (checkHost == 0) {
+        //                 echo "IP já existe no arquivo known_hosts"
+        //             } else {
+        //                 sh "ssh-keyscan -H ${env.PUBLIC_IP} >> ${known_HostsPath}"
+        //                 echo '-------------------------------------------------'
+        //                 echo "IP Público: ${env.PUBLIC_IP} Adicionado ao arquivo known_hosts"
+        //                 echo '-------------------------------------------------'
+        //             }
+        //         }
+        //     }
+        // }
         stage ('Acessando a Instância via Ansible') {
             environment {
                 SSH_PRIVATE_KEY = credentials('SSH_PRIVATE_KEY')
