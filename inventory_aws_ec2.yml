@@ -5,7 +5,7 @@ filters:
   instance-state-name: running 
 keyed_groups:
   - prefix: tag
-    key: Env 
+    key: tags.Env 
     separator: ""
 # compose: 
 #   ansible_host: public_ip_address
