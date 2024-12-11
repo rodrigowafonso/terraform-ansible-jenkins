@@ -11,7 +11,7 @@ pipeline {
         AWS_REGION = credentials('AWS_REGION')
         AWS_TERRAFORM_TFSTATE = credentials('AWS_TERRAFORM_TFSTATE')
         SSH_PRIVATE_KEY = credentials('SSH_PRIVATE_KEY')
-        PRIVATE_KEY_ANSIBLE = credentials('PRIVATE_KEY_ANSIBLE')
+        //PRIVATE_KEY_ANSIBLE = credentials('PRIVATE_KEY_ANSIBLE')
     }
 
     stages {
@@ -48,7 +48,7 @@ pipeline {
                     echo '-------------------------------------------------'
                     echo "O Valor da variável checkHost: ${checkHost}"
                     echo '-------------------------------------------------'
-                    if (${checkHost} == 0) {
+                    if (checkHost == 0) {
                         sh "ssh-keyscan -H ${PUBLIC_IP} >> ${known_HostsPath}"
                         echo '-------------------------------------------------'
                         echo "IP Público: ${PUBLIC_IP} Adicionado ao arquivo known_hosts"
@@ -64,7 +64,7 @@ pipeline {
                 script {
                     sh 'ansible --version'
                     sh 'ansible-inventory --graph'
-                    //ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
+                    ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
                     // sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --ssh-common-args=\'-o StrictHostKeyChecking=no\' nginx.yml'
                     //sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" nginx.yml'
                 }
