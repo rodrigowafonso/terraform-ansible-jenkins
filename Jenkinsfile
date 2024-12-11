@@ -64,6 +64,7 @@ pipeline {
                 script {
                     sh 'ansible --version'
                     sh 'ansible-inventory --graph'
+                    sh 'ansible-inventory -i inventory_aws_ec2.yml --list'
                     ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
                     // sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --ssh-common-args=\'-o StrictHostKeyChecking=no\' nginx.yml'
                     //sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" nginx.yml'
