@@ -13,5 +13,9 @@ resource "aws_iam_role" "aws_access_rwa_jta" {
             }
         ]
     })
-    managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"]
+}
+
+resource "aws_iam_role_policies_exclusive" "associa_role_rwa_jta" {
+    role_name = aws_iam_role.aws_access_rwa_jta.name
+    policy_names = [aws_iam_role_policy.associa_role_rwa_jta.name]
 }
