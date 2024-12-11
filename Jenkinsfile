@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    tools {
-        terraform 'terraform'
-    }
+    // tools {
+    //     terraform 'terraform'
+    // }
 
     stages {
         stage ('Realizando Chechout do Código Github') {
@@ -35,7 +35,7 @@ pipeline {
                     env.publicIp = sh(script: 'terraform output -raw ip_publico_srv_webserver_rwa', returnStdout: true).trim()
                     env.PUBLIC_IP = publicIp
                     echo '-------------------------------------------------'
-                    echo "O IP Público: ${env.PUBLIC_IP}"
+                    echo "O IP Público: ${PUBLIC_IP}"
                     echo '-------------------------------------------------'
                 }
             }
