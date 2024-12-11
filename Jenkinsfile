@@ -10,6 +10,8 @@ pipeline {
         AWS_NAME_BUCKET = credentials('AWS_NAME_BUCKET')
         AWS_REGION = credentials('AWS_REGION')
         AWS_TERRAFORM_TFSTATE = credentials('AWS_TERRAFORM_TFSTATE')
+        SSH_PRIVATE_KEY = credentials('SSH_PRIVATE_KEY')
+        PRIVATE_KEY_ANSIBLE = credentials('PRIVATE_KEY_ANSIBLE')
     }
 
     stages {
@@ -43,6 +45,9 @@ pipeline {
                 script {
                     env.known_HostsPath = '/var/lib/jenkins/.ssh/known_hosts'
                     env.checkHost = sh(script: "grep -P '${PUBLIC_IP}' ${known_HostsPath} || echo 'IP não encontrado'", returnStatus: true)
+                    echo '-------------------------------------------------'
+                    echo "O Valor da variável checkHost: ${checkHost}"
+                    echo '-------------------------------------------------'
                     if (${checkHost} == 0) {
                         echo "IP já existe no arquivo known_hosts"
                     } else {
@@ -63,7 +68,7 @@ pipeline {
                 script {
                     sh 'ansible --version'
                     sh 'ansible-inventory --graph'
-                    ansiblePlaybook credentialsId: 'SSH_PRIVATE_KEY', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
+                    ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
                     // sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --ssh-common-args=\'-o StrictHostKeyChecking=no\' nginx.yml'
                     //sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" nginx.yml'
                 }
