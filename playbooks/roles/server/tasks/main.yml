@@ -19,4 +19,18 @@
     - mysql-server
     - php8.1
     - php8.1-mysql
-    - python-mysqldb
+
+- name: Instalando as dependências do Python para MySQL
+  apt:
+    name: 
+      - python3-dev
+      - default-libmysqlclient-dev
+      - build-essential
+    state: present
+  become: yes
+
+- name: Instalar o MysqlClient via pip
+  pip:
+    name: mysqlclient
+    state: present
+  become: yes
