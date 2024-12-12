@@ -18,6 +18,17 @@
   notify: 
     - restart nginx
 
-- name: Criando o Arquivo de Configuração Padrão Wordpress
+- name: Criando o Arquivo de Configuração padrão Wordpress
   command: mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+  become: yes
+
+- name: Update no arquivo de configuração padrão Wordpress
+  lineinfile:
+    dest=/var/www/html/wordpress/wp-config.php
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  whith_items:
+    - {'regexp': "define\\('DB_NAME', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_db}}');"}
+    - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_user}}');"}
+    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_password}}');"}
   become: yes
