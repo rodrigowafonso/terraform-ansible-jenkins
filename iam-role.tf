@@ -1,7 +1,7 @@
 resource "aws_iam_role" "criar_role_rwa_jta" {
     name = "${var.prefix}-role"
     assume_role_policy = jsonencode({
-        version = "2012-10-17"
+        Version = "2012-10-17"
         Statement = [
             {
                 Action = "sts:AssumeRole"
