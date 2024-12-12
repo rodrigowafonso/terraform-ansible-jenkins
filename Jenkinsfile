@@ -29,35 +29,16 @@ pipeline {
                 //sh 'terraform destroy --auto-approve'
             }
         }
-        stage ('Descobrindo o IP Público da Instância') {
+
+        stage ('Store known hosts of all the hosts in the arquivo known_hosts') {
             steps {
                 script {
-                    env.publicIp = sh(script: 'terraform output -raw ip_publico_srv_webserver_rwa', returnStdout: true).trim()
-                    env.PUBLIC_IP = publicIp
-                    echo '-------------------------------------------------'
-                    echo "O IP Público: ${PUBLIC_IP}"
-                    echo '-------------------------------------------------'
-                }
-            }
-        }
-        stage ('Adicionando a Chave do Host ao known_hosts') {
-            steps {
-                script {
-                    env.known_HostsPath = '/var/lib/jenkins/.ssh/known_hosts'
-                    env.checkHost = sh(script: "grep -P '${PUBLIC_IP}' ${known_HostsPath} || echo 'IP não encontrado'", returnStatus: true)
-                    if (checkHost == 0) {
-                        sh "ssh-keyscan -H ${PUBLIC_IP} >> ${known_HostsPath}"
-                        echo '-------------------------------------------------'
-                        echo "IP Público: ${PUBLIC_IP} Adicionado ao arquivo known_hosts"
-                        echo '-------------------------------------------------'
-                    } else {
-                        echo "IP já existe no arquivo known_hosts"
-                    }
+                    ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'ssh_known_hosts.yml'
                 }
             }
         }
 
-        stage('wait the instance') {
+        stage('Wait the instance stay Status OK') {
             steps {
                 script {
                     echo 'Waiting for the instance'
@@ -67,7 +48,7 @@ pipeline {
             }
         }
 
-        stage ('Acessando a Instância via Ansible') {
+        stage ('Instalando o WebServer Nginx nos Servers') {
             steps {
                 script {
                     sh 'ansible --version'
