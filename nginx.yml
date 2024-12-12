@@ -1,5 +1,5 @@
 - name: Configurando o WebServer Nginx
-  hosts: all
+  hosts: Dev
   become: true
   tasks:
   - name: Provisionando o WebServer Nginx
