@@ -20,6 +20,18 @@
     - php8.1
     - php8.1-mysql
 
+- name: Garantindo que o Python3 esta instalado
+  apt:
+    name: python3
+    state: present
+  become: yes
+
+- name: Garantindo que o Python3 esta instalado
+  apt:
+    name: python3-pip
+    state: present
+  become: yes
+
 - name: Instalando as dependências do Python para MySQL
   apt:
     name: 
@@ -29,17 +41,15 @@
     state: present
   become: yes
 
-- name: Instalar Python3
-  apt:
-    name: python3-pip
+- name: Instalar o MysqlClient via pip
+  pip:
+    name: mysqlclient
     state: present
   become: yes
 
 - name: Verificando a Versão do pip
   command: pip3 --version
 
-# - name: Instalar o MysqlClient via pip
-#   pip:
-#     name: mysqlclient
-#     state: present
-#   become: yes
+- debug:
+  msg: "Verão do mysqlclient: {{ pip_show_output.stdout }}"
+
