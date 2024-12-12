@@ -1,6 +1,6 @@
 ---
 - name: Update and Upgrade the Server
-  hosts: all
+  hosts: Dev
   become: yes
   roles:
     - server
@@ -10,17 +10,17 @@
   roles:
     - php
 - name: Install MySQL
-  hosts: all
+  hosts: Dev
   become: yes
   roles:
     - geerlingguy.mysql
 - name: Install Nginx
-  hosts: all
+  hosts: Dev
   become: yes
   roles:
     - nginx
 - name: Install Wordpress
-  hosts: all
+  hosts: Dev
   become: yes
   roles:
     - wordpress

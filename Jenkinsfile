@@ -50,12 +50,12 @@ pipeline {
                 }
             }
         }
-        stage ('Instalando o WebServer Nginx nos Servers') {
+        stage ('Provisionando o Ambiente do Wordpress') {
             steps {
                 script {
                     sh 'ansible --version'
                     sh 'ansible-inventory --graph'
-                    ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: false, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'nginx.yml'
+                    ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: false, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: './playbooks/wordpress.yml'
                     //sh 'ansible-inventory -i inventory_aws_ec2.yml --list'
                     //sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" --ssh-common-args=\'-o StrictHostKeyChecking=no\' nginx.yml'
                     //sh 'ansible-playbook -i inventory.ini -u "$USER_EC2" --private-key "$SSH_PRIVATE_KEY" nginx.yml'

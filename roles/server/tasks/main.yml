@@ -1,0 +1,17 @@
+---
+# tasks file for server
+
+- name: Garantindo Update do Servidor
+  apt: update_cache=yes cache_valid_time=3600
+  become: yes
+
+- name: Instalando as dependência
+  apt: name={{ packages }} state=present
+  become: yes
+  vars:
+    packages:
+    - nginx
+    - mysql-server
+    - php8.1-mysql
+    - php8.1
+    - python-mysqldb
