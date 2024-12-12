@@ -2,7 +2,7 @@
 # tasks file for server
 - name: Adicionando Repositorio do PHP 8.1
   apt_repository:
-    repo: ppa/ondrej/php
+    repo: ppa:ondrej/php
     state: present
   become: true
 
