@@ -6,7 +6,7 @@ data "aws_key_pair" "key_devops_rwa" {
 
 // Provisionando a Instância EC2 na AWS
 resource "aws_instance" "srv_webserver_rwa" {
-    ami = "ami-0e2c8caa4b6378d8c"
+    ami = "ami-005fc0f236362e99f"
     instance_type = "t2.micro"
     count = 3
     key_name = data.aws_key_pair.key_devops_rwa.key_name
@@ -16,6 +16,7 @@ resource "aws_instance" "srv_webserver_rwa" {
 
     tags = {
         Name = "${element(var.instancia_nome, count.index)}-rwa-jta"
+        Stack = var.prefix
         Env = "Dev"
     }
 }
