@@ -41,13 +41,5 @@
     state: present
   become: yes
 
-- name: Instalar o MysqlClient via pip
-  pip:
-    name: mysqlclient
-    state: present
-  become: yes
-
-- name: Verificando a Versão do pip
-  command: pip3 --version
 
 
