@@ -22,7 +22,7 @@ pipeline {
                 sh 'terraform init -backend-config="bucket=$AWS_NAME_BUCKET" -backend-config="key=$AWS_TERRAFORM_TFSTATE" -backend-config="region=$AWS_REGION"'
                 sh 'terraform plan'
                 sh 'terraform apply --auto-approve'
-                //sh 'terraform destroy --auto-approve'
+                sh 'terraform destroy --auto-approve'
             }
         }
         stage('Wait the instance stay Status OK') {
