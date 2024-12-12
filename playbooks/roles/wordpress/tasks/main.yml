@@ -27,8 +27,8 @@
     dest=/var/www/html/wordpress/wp-config.php
     regexp="{{ item.regexp }}"
     line="{{ item.line }}"
-  whith_items:
+  with_items:
     - {'regexp': "define\\('DB_NAME', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_db}}');"}
-    - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_user}}');"}
-    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_password}}');"}
+    - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_USER', '{{wp_mysql_user}}');"}
+    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{wp_mysql_password}}');"}
   become: yes
