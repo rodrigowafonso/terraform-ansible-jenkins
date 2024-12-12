@@ -56,6 +56,17 @@ pipeline {
                 }
             }
         }
+
+        stage('wait the instance') {
+            steps {
+                script {
+                    echo 'Waiting for the instance'
+                    id = sh(script: 'aws ec2 describe-instances --region ${AWS_REGION} --filters Name=instance-state-name,Values=running --query Reservations[*].Instances[*].InstanceId --output text',  returnStdout:true).trim()
+                    sh 'aws ec2 wait instance-status-ok --region ${AWS_REGION} --instance-ids $id'
+                }
+            }
+        }
+
         stage ('Acessando a Instância via Ansible') {
             steps {
                 script {
