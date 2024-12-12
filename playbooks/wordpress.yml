@@ -1,26 +1,34 @@
----
-- name: Update and Upgrade the Server
-  hosts: Dev
-  become: yes
+- hosts: all
+
   roles:
     - server
-- name: Install PHP
-  hosts: all
-  become: yes
-  roles:
     - php
-- name: Install MySQL
-  hosts: Dev
-  become: yes
-  roles:
-    - geerlingguy.mysql
-- name: Install Nginx
-  hosts: Dev
-  become: yes
-  roles:
-    - nginx
-- name: Install Wordpress
-  hosts: Dev
-  become: yes
-  roles:
+    - mysql
     - wordpress
+
+# ---
+# - name: Update and Upgrade the Server
+#   hosts: Dev
+#   become: yes
+#   roles:
+#     - server
+# - name: Install PHP
+#   hosts: all
+#   become: yes
+#   roles:
+#     - php
+# - name: Install MySQL
+#   hosts: Dev
+#   become: yes
+#   roles:
+#     - geerlingguy.mysql
+# - name: Install Nginx
+#   hosts: Dev
+#   become: yes
+#   roles:
+#     - nginx
+# - name: Install Wordpress
+#   hosts: Dev
+#   become: yes
+#   roles:
+#     - wordpress
