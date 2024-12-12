@@ -6,7 +6,7 @@ data "aws_key_pair" "key_devops_rwa" {
 
 // Provisionando a Instância EC2 na AWS
 resource "aws_instance" "srv_webserver_rwa" {
-    ami = "ami-005fc0f236362e99f"
+    ami = "ami-0e2c8caa4b6378d8c"
     instance_type = "t2.micro"
     count = 3
     key_name = data.aws_key_pair.key_devops_rwa.key_name
