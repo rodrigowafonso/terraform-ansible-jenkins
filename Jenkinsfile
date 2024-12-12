@@ -26,7 +26,7 @@ pipeline {
                 sh 'terraform init -backend-config="bucket=$AWS_NAME_BUCKET" -backend-config="key=$AWS_TERRAFORM_TFSTATE" -backend-config="region=$AWS_REGION"'
                 sh 'terraform plan'
                 sh 'terraform apply --auto-approve'
-                sh 'terraform destroy --auto-approve'
+                //sh 'terraform destroy --auto-approve'
             }
         }
         stage ('Descobrindo o IP Público da Instância') {
@@ -45,9 +45,6 @@ pipeline {
                 script {
                     env.known_HostsPath = '/var/lib/jenkins/.ssh/known_hosts'
                     env.checkHost = sh(script: "grep -P '${PUBLIC_IP}' ${known_HostsPath} || echo 'IP não encontrado'", returnStatus: true)
-                    echo '-------------------------------------------------'
-                    echo "O Valor da variável checkHost: ${checkHost}"
-                    echo '-------------------------------------------------'
                     if (checkHost == 0) {
                         sh "ssh-keyscan -H ${PUBLIC_IP} >> ${known_HostsPath}"
                         echo '-------------------------------------------------'
@@ -71,17 +68,6 @@ pipeline {
                 }
             }
         }
-        // stage ('Adicionando a Chave do Host ao known_hosts') {
-        //     steps {
-        //         echo 'Known_hosts Original'
-        //         echo '-------------------------------------------------'
-        //         sh 'cat /var/lib/jenkins/.ssh/known_hosts' 
-        //         sh 'ssh-keyscan -H 34.228.208.121 >> /var/lib/jenkins/.ssh/known_hosts'
-        //         echo 'Known_hosts modificado'
-        //         echo '-------------------------------------------------'
-        //         sh 'cat /var/lib/jenkins/.ssh/known_hosts'
-        //     }
-        // }
     }
 }
 
