@@ -15,7 +15,7 @@ resource "aws_instance" "srv_webserver_rwa" {
     associate_public_ip_address = true
 
     tags = {
-        Name = "srv_webserver_rwa"
+        Name = "${element(var.instancia_nome, count.index)}-rwa-jta"
         Env = "Dev"
     }
 }

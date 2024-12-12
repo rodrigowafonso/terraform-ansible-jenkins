@@ -1,4 +1,3 @@
-output "ip_publico_srv_webserver_rwa" {
-    description = "Imprime o IP Público da Instância Provisionada"
-    value = aws_instance.srv_webserver_rwa.public_ip
+output "instance_public_ips" {
+  value = { for i in aws_instance.aws_instance.srv_webserver_rwa : i.tags["Name"] => i.public_ip }
 }

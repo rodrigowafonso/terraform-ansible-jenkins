@@ -22,3 +22,9 @@ variable "prefix" {
     default = "rwa_jta"
   
 }
+
+variable "instancia_nome" {
+    description = "Definindo o nome das instâncias"
+    type = list(string)
+    default = ["srv-web", "srv-db", "srv-app"]
+}
