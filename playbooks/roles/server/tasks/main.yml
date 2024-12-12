@@ -1,5 +1,10 @@
 ---
 # tasks file for server
+- name: Adicionando Repositorio do PHP 8.1
+  apt_repository:
+    repo: ppa/ondrej/php
+    state: present
+  become: true
 
 - name: Garantindo Update do Servidor
   apt: update_cache=yes cache_valid_time=3600
@@ -12,6 +17,6 @@
     packages:
     - nginx
     - mysql-server
-    - php8.1-mysql
     - php8.1
+    - php8.1-mysql
     - python-mysqldb
