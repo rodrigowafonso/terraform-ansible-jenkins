@@ -22,18 +22,9 @@ pipeline {
                 sh 'terraform init -backend-config="bucket=$AWS_NAME_BUCKET" -backend-config="key=$AWS_TERRAFORM_TFSTATE" -backend-config="region=$AWS_REGION"'
                 sh 'terraform plan'
                 sh 'terraform apply --auto-approve'
-                //sh 'terraform destroy --auto-approve'
+                sh 'terraform destroy --auto-approve'
             }
         }
-
-        stage ('Store known hosts of all the hosts in the arquivo known_hosts') {
-            steps {
-                script {
-                    ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'ssh_known_hosts.yml'
-                }
-            }
-        }
-
         stage('Wait the instance stay Status OK') {
             steps {
                 script {
@@ -52,7 +43,13 @@ pipeline {
                 }
             }
         }
-
+        stage ('Store known hosts of all the hosts in the arquivo known_hosts') {
+            steps {
+                script {
+                    ansiblePlaybook credentialsId: 'PRIVATE_KEY_ANSIBLE', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'ssh_known_hosts.yml'
+                }
+            }
+        }
         stage ('Instalando o WebServer Nginx nos Servers') {
             steps {
                 script {
