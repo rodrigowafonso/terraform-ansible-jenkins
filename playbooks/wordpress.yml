@@ -1,10 +1,10 @@
 ---
 - hosts: all
   roles:
-  - server
-  - php
-  - mysql
-  - wordpress
+    - server
+    - php
+    - mysql
+    - wordpress
 
 # ---
 # - name: Update and Upgrade the Server
