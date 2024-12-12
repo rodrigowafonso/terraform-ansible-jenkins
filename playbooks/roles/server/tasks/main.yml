@@ -50,6 +50,4 @@
 - name: Verificando a Versão do pip
   command: pip3 --version
 
-- debug:
-  msg: "Verão do mysqlclient: {{ pip_show_output.stdout }}"
 
