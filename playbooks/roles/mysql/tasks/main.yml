@@ -4,19 +4,23 @@
 #   mysql_db: name={{ wp_mysql_db }} state=present
 #   become: yes
 
-- name: Create new databases with names 'foo' and 'bar'
-  community.mysql.mysql_db:
-    name: name={{ wp_mysql_db }}
+- name: Criando o Banco de Dados no mysql
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: {{ wp_mysql_db }}
     state: present
     become: yes
 
-- name: Create database user with name 'bob' and password '12345' with all database privileges
-  community.mysql.mysql_user:
-    name: name={{ wp_mysql_user }}
-    password: password={{ wp_mysql_password }}
-    priv: '*.*:ALL'
+- name: Criando o Usuário do mysql
+  mysql_user: 
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: {{ wp_mysql_user }}
+    password: {{ wp_mysql_password }}
+    priv: "*.*:ALL"
+    host: 'localhost'
     state: present
   become: yes
+
 
 # - name: Criando o Usuário do mysql
 #   mysql_user:
