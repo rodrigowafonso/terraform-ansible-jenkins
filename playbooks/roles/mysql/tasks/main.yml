@@ -1,12 +1,26 @@
 ---
 # tasks file for mysql
-- name: Criando o Banco de Dados no mysql
-  mysql_db: name={{ wp_mysql_db }} state=present
+# - name: Criando o Banco de Dados no mysql
+#   mysql_db: name={{ wp_mysql_db }} state=present
+#   become: yes
+
+- name: Create new databases with names 'foo' and 'bar'
+  community.mysql.mysql_db:
+    name: name={{ wp_mysql_db }}
+    state: present
+    become: yes
+
+- name: Create database user with name 'bob' and password '12345' with all database privileges
+  community.mysql.mysql_user:
+    name: name={{ wp_mysql_user }}
+    password: password={{ wp_mysql_password }}
+    priv: '*.*:ALL'
+    state: present
   become: yes
 
-- name: Criando o Usuário do mysql
-  mysql_user:
-    name={{ wp_mysql_user }}
-    passwodr={{ wp_mysql_password }}
-    priv=*.*:ALL
-  become: yes
+# - name: Criando o Usuário do mysql
+#   mysql_user:
+#     name={{ wp_mysql_user }}
+#     passwodr={{ wp_mysql_password }}
+#     priv=*.*:ALL
+#   become: yes
