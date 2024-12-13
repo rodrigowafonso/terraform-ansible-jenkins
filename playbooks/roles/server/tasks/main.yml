@@ -12,7 +12,6 @@
 
 - name: Instalando as dependência
   apt: name={{ packages }} state=present
-  install_recommends: no
   become: yes
   vars:
     packages:
