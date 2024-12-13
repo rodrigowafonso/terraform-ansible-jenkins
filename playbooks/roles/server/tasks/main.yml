@@ -41,9 +41,9 @@
     state: present
   become: yes
 
-- name: Instalando o Python3-msyqldb 
-  apt:
-    name: python3-mysqldb
+- name: Instalando o PyMySQL
+  pip:
+    name: PyMySQL
     state: present
   become: yes
 
