@@ -21,6 +21,12 @@
     - php8.1
     - php8.1-mysql
 
+- name: Removendo Apache2 se estiver instalado
+  apt: 
+    name: apache2 
+    state: absent
+  become: yes
+
 - name: Garantindo que o Python3 esta instalado
   apt:
     name: python3
