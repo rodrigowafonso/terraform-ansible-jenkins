@@ -19,6 +19,7 @@
     - mysql-server
     - php8.1
     - php8.1-mysql
+  install_recommens: no
 
 - name: Garantindo que o Python3 esta instalado
   apt:
