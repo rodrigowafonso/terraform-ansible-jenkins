@@ -1,7 +1,11 @@
 ---
-- name: Install php packages
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    state: present
-    install_recommends: no
-  loop: "{{ packages }}"
+# tasks file for php
+- name: Instalando PHP e Extensões
+  apt: name={{ packages }} state=present
+  become: yes
+  vars:
+    packages:
+    - php8.1
+    - php8.1-gd
+    - php8.1-mbstring
+    - php8.1-xml

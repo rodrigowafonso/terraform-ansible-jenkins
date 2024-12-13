@@ -1,3 +1,0 @@
-configs:
-  nginx.conf: /etc/nginx/nginx.conf
-  mysite: /etc/nginx/sites-enabled/mysite
