@@ -1,2 +1,12 @@
 ---
-# handlers file for server
+- name: Restart server
+  ansible.builtin.reboot:
+    reboot_timeout: 3000
+    pre_reboot_delay: 5
+- name: Wait for server todo restart
+  local_action:
+    modulo: wait_for
+    host: "{{ inventory_hostname }}"
+    port: 22
+    delay: 10
+  become: false

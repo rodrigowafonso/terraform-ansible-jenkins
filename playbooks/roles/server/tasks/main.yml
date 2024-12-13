@@ -1,56 +1,10 @@
 ---
-# tasks file for server
-- name: Adicionando Repositorio do PHP 8.1
-  apt_repository:
-    repo: ppa:ondrej/php
-    state: present
-  become: true
-
-- name: Garantindo Update do Servidor
-  apt: update_cache=yes cache_valid_time=3600
-  become: yes
-
-- name: Instalando as dependência
-  apt: name={{ packages }} state=present
-  become: yes
-  vars:
-    packages:
-    - nginx
-    - mysql-server
-    - php8.1
-    - php8.1-mysql
-
-- name: Garantindo que o Python3 esta instalado
-  apt:
-    name: python3
-    state: present
-  become: yes
-
-- name: Garantindo que o Python3 esta instalado
-  apt:
-    name: python3-pip
-    state: present
-  become: yes
-
-- name: Instalando as dependências do Python para MySQL
-  apt:
-    name: 
-      - python3-dev
-      - default-libmysqlclient-dev
-      - build-essential
-    state: present
-  become: yes
-
-# - name: Instalando o Python3-msyqldb 
-#   apt:
-#     name: python3-mysqldb
-#     state: present
-#   become: yes
-
-- name: Instalando o mysql-connector-python
-  pip:
-    name: mysql-connector-python
-    state: present
-  become: yes
-
-
+- name: Update All Packages
+  ansible.builtin.apt:
+    update_cache: yes
+- name: Upgrade All Packages
+  ansible.builtin.apt:
+    upgrade: yes
+  notify: 
+    - "Restart server"
+    - "Wait for server to restart"
