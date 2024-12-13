@@ -17,6 +17,7 @@
     line="root /var/www/html/wordpress;"
   notify: 
     - restart nginx
+  become: yes
 
 - name: Criando o Arquivo de Configuração padrão Wordpress
   command: mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php creates=/var/www/html/wordpress/wp-config.php
