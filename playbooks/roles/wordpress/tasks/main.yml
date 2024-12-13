@@ -7,7 +7,7 @@
     validate_certs=no
 
 - name: Descompactando o Wordpress
-  unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/html/wordpress copy=no
+  unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/html/ copy=no
   become: yes
 
 - name: Alterando a Configuração do Nginx
@@ -19,7 +19,7 @@
     - restart nginx
 
 - name: Criando o Arquivo de Configuração padrão Wordpress
-  command: mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+  command: mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php creates=/var/www/html/wordpress/wp-config.php
   become: yes
 
 - name: Update no arquivo de configuração padrão Wordpress
