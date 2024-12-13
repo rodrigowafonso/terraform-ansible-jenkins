@@ -12,6 +12,7 @@
 
 - name: Instalando as dependência
   apt: name={{ packages }} state=present
+  install_recommends: no
   become: yes
   vars:
     packages:
@@ -19,7 +20,6 @@
     - mysql-server
     - php8.1
     - php8.1-mysql
-  install_recommens: no
 
 - name: Garantindo que o Python3 esta instalado
   apt:
