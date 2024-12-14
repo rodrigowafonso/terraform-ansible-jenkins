@@ -14,10 +14,20 @@
   lineinfile:
     dest=/etc/nginx/sites-enabled/default
     regexp="^\s*root\s+/var/www/html;"
-    line="root /var/www/html/wordpress;"
+    line="        root /var/www/html/wordpress;"
   notify: 
-    - restart nginx
+    - restarted nginx
   become: yes
+
+- name: Adicionando index.php à linha index no Nginx
+  lineinfile:
+    dest=/etc/nginx/sites-enabled/default
+    regexp="^\s*index\s+index.html\s+index.htm\s+index.nginx-debian.html;"
+    line="        index index.php index.html index.htm index.nginx-debian.html;"
+  notify: 
+    - restarted nginx
+  become: yes
+
 
 - name: Criando o Arquivo de Configuração padrão Wordpress
   command: mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php creates=/var/www/html/wordpress/wp-config.php
@@ -29,7 +39,7 @@
     regexp="{{ item.regexp }}"
     line="{{ item.line }}"
   with_items:
-    - {'regexp': "define\\('DB_NAME', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_db}}');"}
-    - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_USER', '{{wp_mysql_user}}');"}
-    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{wp_mysql_password}}');"}
+    - {'regexp': "define\\('DB_NAME', '.*'\\);", 'line': "define('DB_NAME', '{{wp_mysql_db}}');"}
+    - {'regexp': "define\\('DB_USER', '.*'\\);", 'line': "define('DB_USER', '{{wp_mysql_user}}');"}
+    - {'regexp': "define\\('DB_PASSWORD', '.*'\\);", 'line': "define('DB_PASSWORD', '{{wp_mysql_password}}');"}
   become: yes
