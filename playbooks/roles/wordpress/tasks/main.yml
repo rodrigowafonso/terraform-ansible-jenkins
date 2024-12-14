@@ -16,7 +16,7 @@
     regexp="^\s*root\s+/var/www/html;"
     line="        root /var/www/html/wordpress;"
   notify: 
-    - restarted nginx
+    - restart nginx
   become: yes
 
 - name: Adicionando index.php à linha index no Nginx
@@ -25,7 +25,7 @@
     regexp="^\s*index\s+index.html\s+index.htm\s+index.nginx-debian.html;"
     line="        index index.php index.html index.htm index.nginx-debian.html;"
   notify: 
-    - restarted nginx
+    - restart nginx
   become: yes
 
 
