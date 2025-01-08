@@ -36,3 +36,12 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+
+# Documentação Base:
+
+https://www.youtube.com/watch?v=Gxbj28ZoUbI
+
+https://www.youtube.com/watch?v=db1zSSDq0kI
+
+Inventário Dinâmicos Ansible: https://www.youtube.com/watch?v=XFoubi5wFb4
