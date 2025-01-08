@@ -28,3 +28,9 @@ variable "instancia_nome" {
     type = list(string)
     default = ["srv-web", "srv-db", "srv-app"]
 }
+
+variable "quantidade_instancia" {
+    description = "Define a quantidade de instâncais"
+    type = number
+    default = 1  
+}
