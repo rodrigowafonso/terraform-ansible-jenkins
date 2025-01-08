@@ -8,7 +8,7 @@ data "aws_key_pair" "key_devops_rwa" {
 resource "aws_instance" "srv_webserver_rwa" {
     ami = "ami-0e2c8caa4b6378d8c"
     instance_type = "t2.micro"
-    count = 3
+    count = var.quantidade_instancia
     key_name = data.aws_key_pair.key_devops_rwa.key_name
     subnet_id = aws_subnet.subnet_rwa_jta.id
     vpc_security_group_ids = [aws_security_group.security_gropu_rwa_jta.id]
