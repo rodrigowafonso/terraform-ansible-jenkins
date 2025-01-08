@@ -32,5 +32,5 @@ variable "instancia_nome" {
 variable "quantidade_instancia" {
     description = "Define a quantidade de instâncais"
     type = number
-    default = 1  
+    default = 0
 }
